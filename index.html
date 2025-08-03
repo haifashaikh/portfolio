@@ -137,18 +137,28 @@
     .sub{ margin:0; font-size:.95rem; color: var(--muted); }
 
     .filters{ display:flex; gap:.75rem; flex-wrap:wrap; margin-bottom:12px; }
-    .filter-btn{
-      padding:6px 14px;
-      border-radius:999px;
-      border:1px solid var(--accent3);
-      background:#fff;
-      font-size:.75rem;
-      cursor:pointer;
-      transition:.25s;
-      position:relative;
-    }
-    .filter-btn.active{ background: var(--accent2); border-color: var(--accent2); color:#fff; }
-    .filter-btn:not(.active):hover{ background: rgba(207,165,208,0.1); }
+   .filter-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent3);
+  background: #fff;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: .25s;
+  position: relative;
+  color: black; /* ✅ Force black text for inactive buttons */
+}
+
+.filter-btn.active {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  color: #fff; /* keep white for active buttons */
+}
+
+.filter-btn:not(.active):hover {
+  background: rgba(207,165,208,0.1);
+}
+
 
     .projects-top{ display:flex; flex-direction:column; gap:0; margin-bottom:1.5rem; }
     .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
@@ -1033,5 +1043,6 @@
   </script>
 </body>
 </html>
+
 
 
