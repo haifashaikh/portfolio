@@ -205,7 +205,6 @@ a:hover {text-decoration:underline;}
   border-radius:999px;
   padding:.8rem 1.3rem;
   font-size:.85rem;
-  cursor:pointer;
   transition: var(--transition);
   text-decoration:none;
 }
@@ -442,3 +441,4 @@ a:hover {text-decoration:underline;}
   object-fit: cover;
   border-radius: .85rem;
 }
+
