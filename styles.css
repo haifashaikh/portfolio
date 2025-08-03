@@ -213,6 +213,9 @@ canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
 .project-label{ font-size:.85rem; font-weight:700; background: rgba(214,124,155,0.15); display:inline-block; padding:4px 12px; border-radius:999px; margin-bottom:8px; color:#4f3d3d;}
 .badge-ongoing{ background: var(--ongoing-bg); color: var(--ongoing-color); font-size:.55rem; padding:4px 10px; border-radius:999px; font-weight:600; text-transform: uppercase; letter-spacing:1px; margin-left:8px;}
 .card h3{ margin:4px 0 8px; font-size:1.2rem; }
+.card[data-hidden] {
+  display: none !important;
+}
 .project-desc{ margin:0 0 8px; font-size:.95rem; line-height:1.4; }
 .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
 .tag{ background: rgba(241,205,196,0.5); padding:6px 14px; border-radius:999px; font-size:.55rem; font-weight:600; color: var(--text); }
@@ -394,9 +397,8 @@ canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
   object-fit: cover;
   border-radius: .85rem;
 }
-.card[data-hidden] {
-  display: none !important;
-}
+
+
 
 
 
