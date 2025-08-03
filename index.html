@@ -1054,40 +1054,50 @@ body.modal-open {
 
     // Modal logic helper
     function makeModal(linkId, modalId) {
-      const link = document.getElementById(linkId);
-      const modal = document.getElementById(modalId);
-      if (!link || !modal) return;
-      const closeEls = modal.querySelectorAll("[data-close], .modal-close");
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        modal.classList.add("active");
-        modal.setAttribute("aria-hidden","false");
-      });
-      closeEls.forEach(c => {
-        c.addEventListener("click", () => {
-          modal.classList.remove("active");
-          modal.setAttribute("aria-hidden","true");
-        });
-      });
-      modal.addEventListener("click", e => {
-        if (e.target === modal) {
-          modal.classList.remove("active");
-          modal.setAttribute("aria-hidden","true");
-        }
-      });
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape") {
-          modal.classList.remove("active");
-          modal.setAttribute("aria-hidden","true");
-        }
-      });
+  const link = document.getElementById(linkId);
+  const modal = document.getElementById(modalId);
+  if (!link || !modal) return;
+  
+  const closeEls = modal.querySelectorAll("[data-close], .modal-close");
+  
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");  // Disable page scroll
+  });
+  
+  function closeModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");  // Enable page scroll
+  }
+  
+  closeEls.forEach(c => {
+    c.addEventListener("click", closeModal);
+  });
+  
+  modal.addEventListener("click", e => {
+    if (e.target === modal) {
+      closeModal();
     }
-    makeModal("view-vietnam", "modal-vietnam");
-    makeModal("view-food", "modal-food");
-    makeModal("view-personality", "modal-personality");
+  });
+  
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeModal();
+    }
+  });
+}
+
+makeModal("view-vietnam", "modal-vietnam");
+makeModal("view-food", "modal-food");
+makeModal("view-personality", "modal-personality");
+
   </script>
 </body>
 </html>
+
 
 
 
