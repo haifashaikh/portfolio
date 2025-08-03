@@ -164,19 +164,6 @@
         <button class="filter-btn" data-filter="ml">ML</button>
       </div>
 
-      <div class="projects-top">
-        <div class="card" data-tags="ml">
-          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-            <div class="project-label">Predictive Traffic Management</div>
-            <div class="badge-ongoing">Ongoing</div>
-          </div>
-          <h3>AI-powered Traffic Flow Optimization</h3>
-          <p class="project-desc">
-            Developing a predictive traffic management system using <strong>YOLOv8</strong> for real-time vehicle detection and <strong>Random Forest</strong> for traffic pattern analysis.
-          </p>
-        </div>
-      </div>
-
       <div class="cards">
         <div class="card" data-tags="ml">
           <div class="project-label">Personality Prediction System</div>
@@ -256,6 +243,86 @@
     </footer>
   </main>
 
-  <script src="script.js"></script>
+  <!-- JavaScript -->
+  <script>
+    // Typing effect
+    const words = ["Haifa.", "a Designer.", "a Developer.", "a Creator."];
+    let idx = 0, char = 0, forward = true;
+    const typedEl = document.querySelector(".typed");
+    function type() {
+      const current = words[idx];
+      if (forward) {
+        typedEl.textContent = current.slice(0, char + 1);
+        char++;
+        if (char === current.length) forward = false;
+      } else {
+        typedEl.textContent = current.slice(0, char - 1);
+        char--;
+        if (char === 0) {
+          forward = true;
+          idx = (idx + 1) % words.length;
+        }
+      }
+      setTimeout(type, forward ? 100 : 60);
+    }
+    type();
+
+    // Hamburger toggle
+    const navToggle = document.getElementById("nav-toggle");
+    const mainNav = document.getElementById("main-nav");
+    if (navToggle && mainNav) {
+      navToggle.addEventListener("click", () => {
+        const expanded = navToggle.getAttribute("aria-expanded") === "true";
+        navToggle.setAttribute("aria-expanded", (!expanded).toString());
+        mainNav.classList.toggle("open");
+      });
+      mainNav.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          if (mainNav.classList.contains("open")) {
+            mainNav.classList.remove("open");
+            navToggle.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+    }
+
+    // Modal function
+    function makeModal(linkId, modalId) {
+      const link = document.getElementById(linkId);
+      const modal = document.getElementById(modalId);
+      if (!link || !modal) return;
+      const closeEls = modal.querySelectorAll("[data-close], .modal-close");
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        if (mainNav && mainNav.classList.contains("open")) {
+          mainNav.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden","false");
+      });
+      closeEls.forEach(c => {
+        c.addEventListener("click", () => {
+          modal.classList.remove("active");
+          modal.setAttribute("aria-hidden","true");
+        });
+      });
+      modal.addEventListener("click", e => {
+        if (e.target === modal || e.target.classList.contains("modal-backdrop")) {
+          modal.classList.remove("active");
+          modal.setAttribute("aria-hidden","true");
+        }
+      });
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape") {
+          modal.classList.remove("active");
+          modal.setAttribute("aria-hidden","true");
+        }
+      });
+    }
+    makeModal("view-vietnam", "modal-vietnam");
+    makeModal("view-food", "modal-food");
+    makeModal("view-personality", "modal-personality");
+  </script>
 </body>
 </html>
