@@ -349,17 +349,6 @@ html, body, * {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Hide scrollbar on desktop */
-@media (min-width: 768px) {
-  .case-modal {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-  }
-  .case-modal::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-  }
-}
-
 /* Show modal */
 .case-modal.active {
   display: flex;
@@ -1083,6 +1072,7 @@ makeModal("view-personality", "modal-personality");
   </script>
 </body>
 </html>
+
 
 
 
