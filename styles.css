@@ -428,6 +428,17 @@ a:hover {text-decoration:underline;}
   padding: 1.5rem;
   box-sizing: border-box;
 }
+/* Hide scrollbar on desktop */
+@media (min-width: 768px) {
+  .case-modal .modal-content {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  .case-modal .modal-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
 .case-gallery .thumbs {
   display: flex;
   flex-direction: row;
@@ -441,4 +452,5 @@ a:hover {text-decoration:underline;}
   object-fit: cover;
   border-radius: .85rem;
 }
+
 
