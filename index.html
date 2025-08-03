@@ -829,21 +829,28 @@
     // Filter logic
     const filterButtons = document.querySelectorAll(".filter-btn");
     const projectCards = document.querySelectorAll("#projects .card");
-    function applyFilter(tag) {
-      projectCards.forEach(c => {
-        const tags = c.getAttribute("data-tags")?.split(",") || [];
-        if (tag === "all" || tags.includes(tag)) {
-          c.removeAttribute("data-hidden");
-          requestAnimationFrame(()=> c.classList.add("visible"));
-        } else {
-          c.classList.remove("visible");
-          c.setAttribute("data-hidden","true");
-        }
-      });
-      filterButtons.forEach(b => b.classList.toggle("active", b.dataset.filter === tag));
+   function applyFilter(tag) {
+  projectCards.forEach(c => {
+    const tags = c.getAttribute("data-tags")?.split(",") || [];
+    if (tag === "all" || tags.includes(tag)) {
+      c.removeAttribute("data-hidden");
+      requestAnimationFrame(() => c.classList.add("visible"));
+    } else {
+      c.classList.remove("visible");
+      c.setAttribute("data-hidden", "true");
     }
-    filterButtons.forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.filter)));
-    applyFilter("all");
+  });
+
+  // hide/show .projects-top if its child card is filtered out
+  document.querySelectorAll('.projects-top').forEach(pt => {
+    const cards = Array.from(pt.querySelectorAll('.card'));
+    const anyVisible = cards.some(c => !c.hasAttribute('data-hidden'));
+    pt.style.display = anyVisible ? '' : 'none';
+  });
+
+  filterButtons.forEach(b => b.classList.toggle("active", b.dataset.filter === tag));
+}
+
 
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
@@ -1028,3 +1035,4 @@
   </script>
 </body>
 </html>
+
