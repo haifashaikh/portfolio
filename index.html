@@ -336,7 +336,6 @@ html, body, * {
     .info-val{ font-weight:600; }
     .footer{ text-align:center; margin:3rem 0 1rem; font-size:.75rem; color: var(--muted); }
 
-  /* Case Study Modal */
 .case-modal {
   position: fixed;
   inset: 0;
@@ -345,15 +344,16 @@ html, body, * {
   justify-content: center;
   z-index: 300;
   padding: 1rem;
-  overflow-y: auto; /* enable scrolling inside modal */
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  height: 100%; /* ensure it can be the scroll container */
+  overflow-y: auto; /* scrolling happens here */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Hide scrollbar on desktop */
 @media (min-width: 768px) {
   .case-modal {
     scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
+    -ms-overflow-style: none; /* IE and Edge */
   }
   .case-modal::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
@@ -382,29 +382,15 @@ html, body, * {
   width: 100%;
   padding: 2rem;
   box-shadow: 0 50px 100px -20px rgba(63,58,53,0.2);
-  overflow: hidden;
+  /* remove this line */
+  /* overflow: hidden; */
 }
 
-/* Close button */
-.modal-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: transparent;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  line-height: 1;
-  color: var(--text);
-}
-
-/* Prevent page scroll when modal open */
+/* Prevent page scroll */
 body.modal-open {
   overflow: hidden;
-  height: 100vh; /* optional to fix some browsers */
+  height: 100vh;
 }
-
-
     .case-header{ display:flex; flex-direction:column; gap:6px; }
     .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:12px; }
     .case-text{ display:flex; flex-direction:column; gap:10px; }
@@ -1097,6 +1083,7 @@ makeModal("view-personality", "modal-personality");
   </script>
 </body>
 </html>
+
 
 
 
