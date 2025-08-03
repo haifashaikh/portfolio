@@ -363,7 +363,11 @@ html, body, * {
       padding: 2rem;
       box-shadow: 0 50px 100px -20px rgba(63,58,53,0.2);
       overflow: hidden;
+      scrollbar-width: none;
     }
+    .modal-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
     .modal-close {
       position: absolute;
       top: 14px;
@@ -1059,6 +1063,7 @@ html, body, * {
   </script>
 </body>
 </html>
+
 
 
 
