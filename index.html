@@ -909,6 +909,17 @@
     }
     animateCursor();
     document.querySelectorAll(".btn, a, .card").forEach(el=>{
+  el.addEventListener("pointerenter", ()=> {
+    cursor.style.transform += " scale(1.3)";
+    follower.style.transform += " scale(1.1)";
+  });
+  el.addEventListener("pointerleave", ()=> {
+    cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+    follower.style.transform = `translate(${posX}px, ${posY}px)`;
+  });
+});
+
+    document.querySelectorAll(".btn, a, .card").forEach(el=>{
       el.addEventListener("pointerenter", ()=> {
         cursor.style.transform += " scale(1.3)";
         follower.style.transform += " scale(1.1)";
@@ -1043,6 +1054,7 @@
   </script>
 </body>
 </html>
+
 
 
 
