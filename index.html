@@ -336,7 +336,8 @@ html, body, * {
     .info-val{ font-weight:600; }
     .footer{ text-align:center; margin:3rem 0 1rem; font-size:.75rem; color: var(--muted); }
 
-   .case-modal {
+  /* Case Study Modal */
+.case-modal {
   position: fixed;
   inset: 0;
   display: none;
@@ -344,26 +345,35 @@ html, body, * {
   justify-content: center;
   z-index: 300;
   padding: 1rem;
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  overflow-y: auto; /* enable scrolling inside modal */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
 }
 
-.case-modal::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+/* Hide scrollbar on desktop */
+@media (min-width: 768px) {
+  .case-modal {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+  }
+  .case-modal::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
+/* Show modal */
 .case-modal.active {
   display: flex;
 }
 
-/* rest stays same */
+/* Backdrop */
 .modal-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(63,58,53,0.25);
   backdrop-filter: blur(6px);
 }
+
+/* Modal content */
 .modal-content {
   position: relative;
   background: #fff;
@@ -374,6 +384,8 @@ html, body, * {
   box-shadow: 0 50px 100px -20px rgba(63,58,53,0.2);
   overflow: hidden;
 }
+
+/* Close button */
 .modal-close {
   position: absolute;
   top: 14px;
@@ -385,6 +397,13 @@ html, body, * {
   line-height: 1;
   color: var(--text);
 }
+
+/* Prevent page scroll when modal open */
+body.modal-open {
+  overflow: hidden;
+  height: 100vh; /* optional to fix some browsers */
+}
+
 
     .case-header{ display:flex; flex-direction:column; gap:6px; }
     .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:12px; }
@@ -1069,6 +1088,7 @@ html, body, * {
   </script>
 </body>
 </html>
+
 
 
 
