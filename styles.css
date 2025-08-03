@@ -424,10 +424,12 @@ a:hover {text-decoration:underline;}
 /* modal improvements: scroll containment and gallery wrapping */
 .case-modal .modal-content {
   max-height: 90vh;
-  overflow-y: auto;
+  overflow-y: scroll; /* ensures scrolling works */
   padding: 1.5rem;
   box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
+
 /* Hide scrollbar on desktop */
 @media (min-width: 768px) {
   .case-modal .modal-content {
@@ -435,9 +437,11 @@ a:hover {text-decoration:underline;}
     -ms-overflow-style: none; /* IE and Edge */
   }
   .case-modal .modal-content::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    width: 0px;
+    background: transparent; /* optional */
   }
 }
+
 
 .case-gallery .thumbs {
   display: flex;
@@ -452,5 +456,6 @@ a:hover {text-decoration:underline;}
   object-fit: cover;
   border-radius: .85rem;
 }
+
 
 
