@@ -210,12 +210,10 @@ canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
   transform: translateY(12px);
 }
 .card.visible{ opacity:1; transform: translateY(0); }
+.card[data-hidden]{ display:none !important; }
 .project-label{ font-size:.85rem; font-weight:700; background: rgba(214,124,155,0.15); display:inline-block; padding:4px 12px; border-radius:999px; margin-bottom:8px; color:#4f3d3d;}
 .badge-ongoing{ background: var(--ongoing-bg); color: var(--ongoing-color); font-size:.55rem; padding:4px 10px; border-radius:999px; font-weight:600; text-transform: uppercase; letter-spacing:1px; margin-left:8px;}
 .card h3{ margin:4px 0 8px; font-size:1.2rem; }
-.card[data-hidden] {
-  display: none !important;
-}
 .project-desc{ margin:0 0 8px; font-size:.95rem; line-height:1.4; }
 .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
 .tag{ background: rgba(241,205,196,0.5); padding:6px 14px; border-radius:999px; font-size:.55rem; font-weight:600; color: var(--text); }
@@ -342,64 +340,9 @@ canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
 .case-gallery .thumbs{ display:flex; flex-direction:column; gap:8px; }
 .case-gallery img{ width:100%; border-radius:.85rem; object-fit:cover; }
 
-/* responsive adjustments */
+/* responsive tweaks */
 @media (max-width: 900px){
   .hero{ flex-direction:column; }
   .cards{ grid-template-columns:1fr; }
   .info-grid{ grid-template-columns:1fr; }
 }
-
-/* entrance */
-@keyframes fadeUp {
-  from { opacity:0; transform: translateY(12px); }
-  to { opacity:1; transform: translateY(0); }
-}
-/* hide custom cursor on touch / mobile and adjust hero/photo on mobile */
-@media (hover: none), (max-width: 900px) {
-  .cursor,
-  .cursor-follower {
-    display: none !important;
-  }
-  .hero {
-    flex-direction: column;
-    align-items: center;
-  }
-  .hero-right {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-  .photo {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto;
-  }
-}
-
-/* modal improvements: scroll containment and gallery wrapping */
-.case-modal .modal-content {
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 1.5rem;
-  box-sizing: border-box;
-}
-.case-gallery .thumbs {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-.case-gallery img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: .85rem;
-}
-
-
-
-
-
-
