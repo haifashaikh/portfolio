@@ -336,49 +336,55 @@ html, body, * {
     .info-val{ font-weight:600; }
     .footer{ text-align:center; margin:3rem 0 1rem; font-size:.75rem; color: var(--muted); }
 
-    /* case study modals */
-    .case-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 300;
-      padding: 1rem;
-      overflow-y: auto;
-    }
-    .case-modal.active { display: flex; }
-    .modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(63,58,53,0.25);
-      backdrop-filter: blur(6px);
-    }
-    .modal-content {
-      position: relative;
-      background: #fff;
-      border-radius: 1rem;
-      max-width: 1000px;
-      width: 100%;
-      padding: 2rem;
-      box-shadow: 0 50px 100px -20px rgba(63,58,53,0.2);
-      overflow: hidden;
-      scrollbar-width: none;
-    }
-    .modal-content::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+   .case-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  padding: 1rem;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
-    .modal-close {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: transparent;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-      line-height: 1;
-      color: var(--text);
-    }
+
+.case-modal::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.case-modal.active {
+  display: flex;
+}
+
+/* rest stays same */
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(63,58,53,0.25);
+  backdrop-filter: blur(6px);
+}
+.modal-content {
+  position: relative;
+  background: #fff;
+  border-radius: 1rem;
+  max-width: 1000px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 50px 100px -20px rgba(63,58,53,0.2);
+  overflow: hidden;
+}
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  color: var(--text);
+}
 
     .case-header{ display:flex; flex-direction:column; gap:6px; }
     .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:12px; }
@@ -1063,6 +1069,7 @@ html, body, * {
   </script>
 </body>
 </html>
+
 
 
 
