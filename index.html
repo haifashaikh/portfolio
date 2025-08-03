@@ -828,22 +828,24 @@
 
     // Filter logic
     const filterButtons = document.querySelectorAll(".filter-btn");
-    const projectCards = document.querySelectorAll("#projects .card");
-    function applyFilter(tag) {
-      projectCards.forEach(c => {
-        const tags = c.getAttribute("data-tags")?.split(",") || [];
-        if (tag === "all" || tags.includes(tag)) {
-          c.removeAttribute("data-hidden");
-          requestAnimationFrame(()=> c.classList.add("visible"));
-        } else {
-          c.classList.remove("visible");
-          c.setAttribute("data-hidden","true");
-        }
-      });
-      filterButtons.forEach(b => b.classList.toggle("active", b.dataset.filter === tag));
-    }
-    filterButtons.forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.filter)));
-    applyFilter("all");
+  const projectCards = document.querySelectorAll("#projects .card");
+  function applyFilter(tag) {
+    projectCards.forEach(c => {
+      const tags = c.getAttribute("data-tags")?.split(",") || [];
+      if (tag === "all" || tags.includes(tag)) {
+        c.removeAttribute("data-hidden");
+        requestAnimationFrame(() => c.classList.add("visible"));
+      } else {
+        c.setAttribute("data-hidden", "true");
+        c.classList.remove("visible");
+      }
+    });
+    filterButtons.forEach(b =>
+      b.classList.toggle("active", b.dataset.filter === tag)
+    );
+  }
+  filterButtons.forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.filter)));
+  applyFilter("all");
 
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
@@ -1028,3 +1030,4 @@
   </script>
 </body>
 </html>
+
