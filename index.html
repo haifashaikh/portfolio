@@ -5,15 +5,417 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shaikh Haifa Banu • Portfolio</title>
   <meta name="description" content="Portfolio of Shaikh Haifa Banu — UI/UX Designer & Developer" />
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg:#fff9f5;
+      --card:#ffffff;
+      --text:#3f3a35;
+      --muted:#a89f98;
+      --accent1:#d98fa7;
+      --accent2:#f3c9b8;
+      --accent3:#8c6d5a;
+      --ongoing-bg: rgba(255,193,7,0.15);
+      --ongoing-color: #a67c00;
+      --radius:1.1rem;
+      --shadow:0 30px 80px -10px rgba(63,58,53,0.15);
+      --transition:.35s cubic-bezier(.4,.2,.2,1);
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Inter",Roboto,sans-serif;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      background: linear-gradient(135deg,#fff9f5 0%,#f3e7e2 70%);
+      color: var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+      position:relative;
+      cursor:none;
+    }
+    a{color: var(--accent3); text-decoration:none; font-weight:600;}
+    a:hover{text-decoration:underline;}
+    button{font-family: inherit; border: none; background:none; cursor:pointer;}
+
+    /* cursor */
+    .cursor, .cursor-follower {
+      position: fixed;
+      top:0;
+      left:0;
+      pointer-events:none;
+      border-radius:50%;
+      transform:translate(-50%,-50%);
+      mix-blend-mode: normal;
+      transition: background .25s ease, transform .15s ease;
+      z-index:1000;
+    }
+    .cursor { width:10px; height:10px; background: var(--accent3); }
+    .cursor-follower { width:38px; height:38px; border:2px solid var(--accent1); opacity:.6; }
+
+    header{
+      position:fixed;
+      top:0; left:0; right:0;
+      backdrop-filter:blur(12px);
+      background:rgba(255,255,255,0.85);
+      padding:1rem 1rem 0.5rem;
+      z-index:100;
+      border-bottom:1px solid rgba(0,0,0,0.05);
+    }
+    .nav-wrap{
+      max-width:1120px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+    .logo{ font-weight:700; font-size:1.2rem; flex:1; display:flex; align-items:center; gap:6px; }
+    .logo .dot{ background: var(--accent1); width:10px; height:10px; border-radius:50%; }
+    nav{ display:flex; gap:1rem; }
+    nav a{ font-size:.85rem; padding:.5rem .8rem; border-radius:.5rem; position:relative; overflow:hidden; }
+    nav a::after{
+      content:""; position:absolute; left:0; bottom:0; height:2px; width:0%; background: var(--accent1); transition: width .3s ease; border-radius:2px;
+    }
+    nav a:hover::after{ width:100%; }
+
+    main{
+      max-width:1080px;
+      margin:0 auto;
+      padding:1rem 1rem 4rem;
+      padding-top:110px;
+    }
+
+    .hero{
+      position:relative;
+      display:flex;
+      gap:2rem;
+      flex-wrap:wrap;
+      padding:1.5rem 1rem 2rem;
+    }
+    .hero-left{
+      flex:1; min-width:280px; display:flex; flex-direction:column; gap:1rem; z-index:1;
+    }
+    .eyebrow{ font-size:.85rem; text-transform:uppercase; letter-spacing:1px; color: var(--muted); margin:0; }
+    .title{ font-size:2.9rem; margin:0; line-height:1.05; font-weight:700; }
+    .typed{ color: var(--accent1); }
+    .desc{ margin:8px 0 16px; font-size:1.05rem; max-width:600px; }
+    .buttons{ display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn{
+      padding:.85rem 1.4rem;
+      border-radius:999px;
+      font-weight:600;
+      font-size:.85rem;
+      outline:none;
+      border:2px solid transparent;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      position:relative;
+      overflow:hidden;
+      transition: var(--transition);
+      background: var(--accent1);
+      color:#fff;
+    }
+    .btn.secondary{ background: transparent; color: var(--accent3); border:2px solid var(--accent1); }
+    .btn:hover{ filter:brightness(1.05); }
+    .hero-right{ width:160px; flex-shrink:0; position:relative; }
+    .photo{ width:160px; height:160px; border-radius:50%; overflow:hidden; border:4px solid var(--accent2); background:#fff; }
+    .photo img{ width:100%; object-fit:cover; display:block; }
+
+    .background-layer{ position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden; }
+    .blob{ position:absolute; border-radius:50%; filter: blur(140px); opacity:.55; mix-blend-mode:multiply; transition: transform .15s ease-out; }
+    .b1{width:480px; height:480px; background:rgba(217,143,167,0.25); top:-100px; left:-80px;}
+    .b2{width:560px; height:560px; background:rgba(243,201,184,0.35); bottom:-160px; right:-40px;}
+    .b3{width:340px; height:340px; background:rgba(207,165,208,0.2); top:45%; right:40%;}
+    canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+
+    .section{ padding:2rem 0 1rem; position:relative; }
+    .section-header{ display:flex; flex-direction:column; gap:4px; margin-bottom:14px; }
+    .section-header h2{ margin:0; font-size:2rem; font-weight:700; position:relative; display:inline-block; }
+    .section-header h2::after{
+      content:""; position:absolute; left:0; bottom:-6px; height:4px; width:45px; border-radius:3px; background: var(--accent2);
+    }
+    .sub{ margin:0; font-size:.95rem; color: var(--muted); }
+
+    .filters{ display:flex; gap:.75rem; flex-wrap:wrap; margin-bottom:12px; }
+    .filter-btn{
+      padding:6px 14px;
+      border-radius:999px;
+      border:1px solid var(--accent3);
+      background:#fff;
+      font-size:.75rem;
+      cursor:pointer;
+      transition:.25s;
+      position:relative;
+    }
+    .filter-btn.active{ background: var(--accent2); border-color: var(--accent2); color:#fff; }
+    .filter-btn:not(.active):hover{ background: rgba(207,165,208,0.1); }
+
+    .projects-top{ display:flex; flex-direction:column; gap:0; margin-bottom:1.5rem; }
+    .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+    .card{
+      background: var(--card);
+      padding:1.35rem 1rem 1.45rem;
+      border-radius:1rem;
+      position:relative;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      border:1px solid rgba(0,0,0,0.03);
+      transform-style: preserve-3d;
+      transition: transform .35s ease, box-shadow .35s ease, opacity .5s ease;
+      cursor: pointer;
+      opacity:0;
+      transform: translateY(12px);
+    }
+    .card.visible{ opacity:1; transform: translateY(0); }
+    .project-label{
+      font-size:.85rem; font-weight:700; background: rgba(214,124,155,0.15); display:inline-block;
+      padding:4px 12px; border-radius:999px; margin-bottom:8px; color:#4f3d3d;
+    }
+    .badge-ongoing{
+      background: var(--ongoing-bg);
+      color: var(--ongoing-color);
+      font-size:.55rem;
+      padding:4px 10px;
+      border-radius:999px;
+      font-weight:600;
+      text-transform: uppercase;
+      letter-spacing:1px;
+      margin-left:8px;
+    }
+    .card h3{ margin:4px 0 8px; font-size:1.2rem; }
+    .project-desc{ margin:0 0 8px; font-size:.95rem; line-height:1.4; }
+    .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+    .tag{
+      background: rgba(241,205,196,0.5);
+      padding:6px 14px;
+      border-radius:999px;
+      font-size:.55rem;
+      font-weight:600;
+      color: var(--text);
+    }
+    .card-footer{ margin-top:6px; }
+    .text-link{ font-size:.85rem; font-weight:600; color: var(--accent3); text-decoration:none; }
+    .text-link:hover{ text-decoration:underline; }
+
+    .info-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+    .info-card{
+      background: var(--card);
+      padding:1.25rem 1rem 1.35rem;
+      border-radius:1rem;
+      border:1px solid rgba(0,0,0,0.03);
+      box-shadow:0 25px 60px -10px rgba(63,58,53,0.08);
+      position:relative;
+      transition: transform .3s ease, opacity .5s ease;
+      opacity:0;
+      transform: translateY(12px);
+    }
+    .info-card.visible{ opacity:1; transform: translateY(0); }
+    .info-title{ font-weight:700; margin:0 0 6px; }
+    .info-sub{ font-size:.9rem; margin:0 0 4px; color: var(--muted); }
+    .info-meta{ font-size:.75rem; color: var(--muted); }
+    .contact-container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.contact-info {
+  background: var(--card);
+  padding: 2rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  flex: 0 0 100px;
+}
+
+.contact-icon {
+  color: var(--accent3);
+  background: rgba(217,143,167,0.1);
+  padding: 0.6rem;
+  border-radius: 50%;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.contact-icon:hover {
+  background: var(--accent1);
+  color: white;
+  transform: scale(1.1);
+}
+
+.contact-form {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  font-size: 1rem;
+  background: #fff;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent1);
+  box-shadow: 0 0 0 2px rgba(217,143,167,0.2);
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+  .contact-info {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+
+    .contact-wrapper{ display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:8px; }
+    @media (max-width: 900px){
+      .hero{ flex-direction:column; }
+      .contact-wrapper{ grid-template-columns:1fr; }
+    }
+    .contact-box{ display:flex; flex-direction:column; gap:12px; }
+    .contact-field{ display:flex; flex-direction:column; gap:6px; }
+    .contact-field label{
+      font-size:.6rem;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color: var(--muted);
+    }
+    .contact-field input,
+    .contact-field textarea{
+      padding:12px 14px;
+      border-radius:.75rem;
+      border:1px solid rgba(0,0,0,0.08);
+      font-size:1rem;
+      resize: vertical;
+      font-family:inherit;
+    }
+    .info-row{ display:flex; gap:10px; align-items:flex-start; }
+    .info-label{
+      font-size:.6rem;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color: var(--muted);
+      width:100px;
+      flex-shrink:0;
+    }
+    .info-val{ font-weight:600; }
+    .footer{ text-align:center; margin:3rem 0 1rem; font-size:.75rem; color: var(--muted); }
+
+    /* case study modals */
+    .case-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .case-modal.active { display: flex; }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(63,58,53,0.25);
+      backdrop-filter: blur(6px);
+    }
+    .modal-content {
+      position: relative;
+      background: #fff;
+      border-radius: 1rem;
+      max-width: 1000px;
+      width: 100%;
+      padding: 2rem;
+      box-shadow: 0 50px 100px -20px rgba(63,58,53,0.2);
+      overflow: hidden;
+    }
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .case-header{ display:flex; flex-direction:column; gap:6px; }
+    .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:12px; }
+    .case-text{ display:flex; flex-direction:column; gap:10px; }
+    .case-gallery .thumbs{ display:flex; flex-direction:column; gap:8px; }
+    .case-gallery img{ width:100%; border-radius:.85rem; object-fit:cover; }
+    @media (max-width:900px){ .case-grid{ grid-template-columns:1fr; } }
+
+    @media (hover: hover){ body { cursor: none; } }
+
+    /* NEW FIXES: remove custom cursor on touch/mobile, hero photo mobile stacking, modal responsiveness */
+    @media (hover: none), (max-width: 900px) {
+      .cursor,
+      .cursor-follower {
+        display: none !important;
+      }
+      .hero {
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero-right {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      .photo {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto;
+      }
+    }
+
+    .case-modal .modal-content {
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+    .case-gallery .thumbs {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .case-gallery img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: .85rem;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- custom cursor -->
   <div class="cursor"></div>
   <div class="cursor-follower"></div>
 
-  <!-- background blobs + canvas -->
   <div class="background-layer">
     <div class="blob b1"></div>
     <div class="blob b2"></div>
@@ -21,12 +423,10 @@
     <canvas id="bg-canvas"></canvas>
   </div>
 
-  <!-- header with hamburger -->
   <header>
     <div class="nav-wrap">
       <div class="logo">Haifa<span class="dot"></span></div>
-      <button class="hamburger" aria-label="Toggle navigation" id="nav-toggle" aria-expanded="false">&#9776;</button>
-      <nav id="main-nav">
+      <nav>
         <a href="#about">About</a>
         <a href="#education">Education</a>
         <a href="#certifications">Certs</a>
@@ -45,7 +445,7 @@
         <h1 class="title">I'm <span class="typed"></span></h1>
         <p class="desc">Crafting engaging, accessible, and visually compelling digital experiences.</p>
         <div class="buttons">
-          <a class="btn" href="Resume.pdf" download>Download Resume</a>
+         <a class="btn" href="Resume.pdf" download>Download Resume</a>
           <button class="btn secondary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Work</button>
         </div>
       </div>
@@ -164,6 +564,7 @@
         <button class="filter-btn" data-filter="ml">ML</button>
       </div>
 
+      <!-- Ongoing top project -->
       <div class="projects-top">
         <div class="card" data-tags="ml">
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
@@ -187,6 +588,7 @@
         </div>
       </div>
 
+      <!-- Grid projects -->
       <div class="cards">
         <div class="card" data-tags="ml">
           <div class="project-label">Personality Prediction System</div>
@@ -200,7 +602,7 @@
             <span class="tag">Resume Parsing</span>
           </div>
           <div class="card-footer">
-            <a id="view-personality" class="text-link" href="#">View Details</a>
+            <button id="view-personality" class="text-link" type="button">View Details</button>
           </div>
         </div>
 
@@ -217,7 +619,7 @@
             <span class="tag">Travel Blog</span>
           </div>
           <div class="card-footer">
-            <a id="view-vietnam" class="text-link" href="#">View Project</a>
+            <button id="view-vietnam" class="text-link" type="button">View Project</button>
           </div>
         </div>
 
@@ -232,59 +634,169 @@
             <span class="tag">UI/UX</span>
           </div>
           <div class="card-footer">
-            <a id="view-food" class="text-link" href="#">View Design</a>
+            <button id="view-food" class="text-link" type="button">View Design</button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Contact -->
-    <section class="section" id="contact">
-      <div class="section-header">
-        <h2>Contact</h2>
-        <p class="sub">Let’s connect. I’d love to hear from you.</p>
-      </div>
+  <section class="section" id="contact">
+  <div class="section-header">
+    <h2>Contact</h2>
+    <p class="sub">Let’s connect. I’d love to hear from you.</p>
+  </div>
 
-      <div class="contact-container">
-        <div class="contact-info">
-          <a href="mailto:eshahaifa100@gmail.com" target="_blank" class="contact-icon" title="Email">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path d="M3 6H21C21.5523 6 22 6.44772 22 7V17C22 17.5523 21.5523 18 21 18H3C2.44772 18 2 17.5523 2 17V7C2 6.44772 2.44772 6 3 6Z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M22 7L12 13L2 7" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-          </a>
-          <a href="https://www.linkedin.com/in/haifa-shaikh" target="_blank" class="contact-icon" title="LinkedIn">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M7 10H10V17H7V10Z" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="8.5" cy="7.5" r="1.5" fill="currentColor"/>
-              <path d="M13 14C13 12.3431 14.3431 11 16 11C17.6569 11 19 12.3431 19 14V17H16V14C16 13.4477 15.5523 13 15 13C14.4477 13 14 13.4477 14 14V17H11V14C11 12.3431 12.3431 11 14 11C15.6569 11 17 12.3431 17 14V17H14V14C14 13.4477 13.5523 13 13 13C12.4477 13 12 13.4477 12 14V17H9V10H12V11.5C12.8284 10.6716 14.0607 10 15.5 10C18.5376 10 21 12.4624 21 15.5V17H18V15.5C18 14.9477 17.5523 14.5 17 14.5C16.4477 14.5 16 14.9477 16 15.5V17H13V14Z" fill="currentColor"/>
-            </svg>
-          </a>
-          <a href="https://github.com/haifashaikh" target="_blank" class="contact-icon" title="GitHub">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5C6.20101 1.5 1.5 6.20101 1.5 12C1.5 16.7841 4.64412 20.8007 9.04866 22.1099C9.64866 22.2129 9.87366 21.8649 9.87366 21.5619V19.6448C6.71861 20.3208 6.09461 18.0738 6.09461 18.0738C5.54461 16.7138 4.73961 16.3738 4.73961 16.3738C3.64361 15.6538 4.82661 15.6698 4.82661 15.6698C6.03461 15.7568 6.67161 16.9278 6.67161 16.9278C7.73561 18.7378 9.48361 18.2268 10.1586 17.9368C10.2576 17.1448 10.5736 16.6118 10.9246 16.3148C8.20961 16.0148 5.36761 15.0568 5.36761 10.7218C5.36761 9.49777 5.81161 8.51677 6.52661 7.77077C6.41061 7.46777 6.02161 6.31177 6.63561 4.78577C6.63561 4.78577 7.55861 4.46977 9.86061 5.95777C10.7336 5.70177 11.6696 5.57377 12.6056 5.56877C13.5416 5.57377 14.4776 5.70177 15.3506 5.95777C17.6526 4.46977 18.5756 4.78577 18.5756 4.78577C19.1896 6.31177 18.8006 7.46777 18.6846 7.77077C19.3996 8.51677 19.8436 9.49777 19.8436 10.7218C19.8436 15.0708 17.0006 16.0098 14.2806 16.3048C14.7206 16.6768 15.1026 17.4328 15.1026 18.5678V21.5619C15.1026 21.8649 15.3276 22.2129 15.9276 22.1099C20.3321 20.8007 23.4762 16.7841 23.4762 12C23.4762 6.20101 18.7752 1.5 12.9762 1.5H12Z" fill="currentColor"/>
-            </svg>
-          </a>
-          <a href="https://www.google.com/maps/place/Udupi,+India" target="_blank" class="contact-icon" title="Location">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2C8.13401 2 5 5.13401 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13401 15.866 2 12 2Z" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="12" cy="9" r="2.5" fill="currentColor"/>
-            </svg>
-          </a>
+  <div class="contact-container">
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <a href="mailto:eshahaifa100@gmail.com" target="_blank" class="contact-icon" title="Email">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M3 6H21C21.5523 6 22 6.44772 22 7V17C22 17.5523 21.5523 18 21 18H3C2.44772 18 2 17.5523 2 17V7C2 6.44772 2.44772 6 3 6Z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M22 7L12 13L2 7" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </a>
+
+      <a href="https://www.linkedin.com/in/haifa-shaikh" target="_blank" class="contact-icon" title="LinkedIn">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M7 10H10V17H7V10Z" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="8.5" cy="7.5" r="1.5" fill="currentColor"/>
+          <path d="M13 14C13 12.3431 14.3431 11 16 11C17.6569 11 19 12.3431 19 14V17H16V14C16 13.4477 15.5523 13 15 13C14.4477 13 14 13.4477 14 14V17H11V14C11 12.3431 12.3431 11 14 11C15.6569 11 17 12.3431 17 14V17H14V14C14 13.4477 13.5523 13 13 13C12.4477 13 12 13.4477 12 14V17H9V10H12V11.5C12.8284 10.6716 14.0607 10 15.5 10C18.5376 10 21 12.4624 21 15.5V17H18V15.5C18 14.9477 17.5523 14.5 17 14.5C16.4477 14.5 16 14.9477 16 15.5V17H13V14Z" fill="currentColor"/>
+        </svg>
+      </a>
+
+      <a href="https://github.com/haifashaikh" target="_blank" class="contact-icon" title="GitHub">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5C6.20101 1.5 1.5 6.20101 1.5 12C1.5 16.7841 4.64412 20.8007 9.04866 22.1099C9.64866 22.2129 9.87366 21.8649 9.87366 21.5619V19.6448C6.71861 20.3208 6.09461 18.0738 6.09461 18.0738C5.54461 16.7138 4.73961 16.3738 4.73961 16.3738C3.64361 15.6538 4.82661 15.6698 4.82661 15.6698C6.03461 15.7568 6.67161 16.9278 6.67161 16.9278C7.73561 18.7378 9.48361 18.2268 10.1586 17.9368C10.2576 17.1448 10.5736 16.6118 10.9246 16.3148C8.20961 16.0148 5.36761 15.0568 5.36761 10.7218C5.36761 9.49777 5.81161 8.51677 6.52661 7.77077C6.41061 7.46777 6.02161 6.31177 6.63561 4.78577C6.63561 4.78577 7.55861 4.46977 9.86061 5.95777C10.7336 5.70177 11.6696 5.57377 12.6056 5.56877C13.5416 5.57377 14.4776 5.70177 15.3506 5.95777C17.6526 4.46977 18.5756 4.78577 18.5756 4.78577C19.1896 6.31177 18.8006 7.46777 18.6846 7.77077C19.3996 8.51677 19.8436 9.49777 19.8436 10.7218C19.8436 15.0708 17.0006 16.0098 14.2806 16.3048C14.7206 16.6768 15.1026 17.4328 15.1026 18.5678V21.5619C15.1026 21.8649 15.3276 22.2129 15.9276 22.1099C20.3321 20.8007 23.4762 16.7841 23.4762 12C23.4762 6.20101 18.7752 1.5 12.9762 1.5H12Z" fill="currentColor"/>
+        </svg>
+      </a>
+
+      <a href="https://www.google.com/maps/place/Udupi,+India" target="_blank" class="contact-icon" title="Location">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C8.13401 2 5 5.13401 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13401 15.866 2 12 2Z" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="12" cy="9" r="2.5" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Contact Form -->
+    <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </div>
+</section>
+
+
+
+    <!-- Vietnam Travel Journal Modal -->
+    <div id="modal-vietnam" class="case-modal" aria-hidden="true" role="dialog" aria-label="Vietnam Travel Journal case study">
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <div class="case-header">
+          <div class="project-label">Travel Journal Website</div>
+          <h2>Vietnam Travel Journal</h2>
+          <p class="sub">Interactive travel journal capturing Vietnam experiences.</p>
         </div>
-
-        <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required />
-          <input type="email" name="email" placeholder="Your Email" required />
-          <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
-          <button type="submit" class="btn">Send Message</button>
-        </form>
+        <div class="modal-body">
+          <div class="case-grid">
+            <div class="case-text">
+              <p>Created an immersive, interactive journal to document my Vietnam trip. Features include:</p>
+              <ul>
+                <li>Photo galleries with location-specific captions.</li>
+                <li>Map highlights of visited places.</li>
+                <li>Personal narratives organized by city/experience.</li>
+                <li>Mobile-first responsive design for on-the-go reading.</li>
+              </ul>
+              <p><strong>Tech stack:</strong> Designed in Figma and built with HTML5, CSS3, and vanilla JavaScript; responsive and accessible, deployed on a static host with Git version control.</p>
+              <p><a class="text-link" href="https://haifashaikh.github.io/vietnam-journal" target="_blank" rel="noopener">View live version</a></p>
+            </div>
+            <div class="case-gallery">
+              <div class="thumbs">
+                <img src="im1.png" alt="Vietnam journal snapshot 1" />
+                <img src="im2.png" alt="Vietnam journal snapshot 2" />
+                <img src="1im3.png" alt="Vietnam journal snapshot 3" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Modals (Vietnam, Food, Personality) -->
-    <!-- keep your existing modal markup here -->
+    <!-- Food App UI Modal -->
+    <div id="modal-food" class="case-modal" aria-hidden="true" role="dialog" aria-label="Food App UI case study">
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <div class="case-header">
+          <div class="project-label">UI/UX Design</div>
+          <h2>Food App UI</h2>
+          <p class="sub">Clean, promotional food ordering interface.</p>
+        </div>
+        <div class="modal-body">
+          <div class="case-grid">
+            <div class="case-text">
+              <p>Designed an intuitive food ordering interface in Figma with emphasis on:</p>
+              <ul>
+                <li>Clear categorization of menu items.</li>
+                <li>High-quality food images to boost appetite appeal.</li>
+                <li>User-friendly navigation and ordering flow.</li>
+                <li>Visual hierarchy tailored for mobile and desktop.</li>
+              </ul>
+              <p><strong>Tech stack:</strong> Crafted in Figma; prototype built to demonstrate interaction flows. Handoff-ready assets for front-end implementation.</p>
+              <p><a class="text-link" href="https://haifashaikh.github.io/foodapp/" target="_blank" rel="noopener">View Figma project</a></p>
+            </div>
+            <div class="case-gallery">
+              <div class="thumbs">
+                <img src="food1.png" alt="Food app UI snapshot 1" />
+                <img src="food2.png" alt="Food app UI snapshot 2" />
+                <img src="food3.png" alt="Food app UI snapshot 3" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personality Prediction Modal -->
+    <div id="modal-personality" class="case-modal" aria-hidden="true" role="dialog" aria-label="Personality Prediction case study">
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <div class="case-header">
+          <div class="project-label">Machine Learning</div>
+          <h2>Personality Prediction System</h2>
+          <p class="sub">Resume-based Big Five trait inference.</p>
+        </div>
+        <div class="modal-body">
+          <div class="case-grid">
+            <div class="case-text">
+              <p>Built a system that analyzes CVs to predict Big Five personality traits for candidate evaluation. Key features:</p>
+              <ul>
+                <li>Resume parsing to extract relevant textual features.</li>
+                <li>Mapping linguistic and structural cues to personality dimensions.</li>
+                <li>Modeling using machine learning pipelines for trait inference.</li>
+                <li>Dashboard-ready outputs to assist recruiters.</li>
+              </ul>
+              <p><strong>Tech stack:</strong> Python for preprocessing and modeling, custom feature extraction from resumes, classification/regression algorithms (e.g., ensemble methods), evaluation metrics to ensure reliability.</p>
+              <p><a class="text-link" href="#" target="_blank" rel="noopener">My Work</a> · <a class="text-link" href="p">Read Report</a></p>
+            </div>
+            <div class="case-gallery">
+              <div class="thumbs">
+                <img src="1. Landing Page (1).png" alt="Personality prediction pipeline" />
+                <img src="2. Upload Resume and Details (2).png" alt="Prediction interface snapshot" />
+                <img src="3. Result Page (1).png" alt="Model output snapshot" />
+                <img src="4. Command Line Outputs (1).png" alt="Model commandline output" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="footer">
       <p>&copy; 2025 Shaikh Haifa Banu. Interactive & intentional.</p>
@@ -314,36 +826,7 @@
     }
     type();
 
-    // Hamburger toggle
-    const navToggle = document.getElementById("nav-toggle");
-    const mainNav = document.getElementById("main-nav");
-    if (navToggle && mainNav) {
-      navToggle.addEventListener("click", () => {
-        const expanded = navToggle.getAttribute("aria-expanded") === "true";
-        navToggle.setAttribute("aria-expanded", (!expanded).toString());
-        mainNav.classList.toggle("open");
-      });
-      mainNav.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", () => {
-          if (mainNav.classList.contains("open")) {
-            mainNav.classList.remove("open");
-            navToggle.setAttribute("aria-expanded", "false");
-          }
-        });
-      });
-    }
-
-    // Close mobile nav when clicking outside
-    document.body.addEventListener("click", e => {
-      if (mainNav && navToggle && mainNav.classList.contains("open")) {
-        if (!mainNav.contains(e.target) && !navToggle.contains(e.target)) {
-          mainNav.classList.remove("open");
-          navToggle.setAttribute("aria-expanded", "false");
-        }
-      }
-    });
-
-    // Filter logic (with top project hide/show)
+    // Filter logic
     const filterButtons = document.querySelectorAll(".filter-btn");
     const projectCards = document.querySelectorAll("#projects .card");
     function applyFilter(tag) {
@@ -351,26 +834,12 @@
         const tags = c.getAttribute("data-tags")?.split(",") || [];
         if (tag === "all" || tags.includes(tag)) {
           c.removeAttribute("data-hidden");
-          requestAnimationFrame(() => c.classList.add("visible"));
+          requestAnimationFrame(()=> c.classList.add("visible"));
         } else {
           c.classList.remove("visible");
-          c.setAttribute("data-hidden", "true");
+          c.setAttribute("data-hidden","true");
         }
       });
-
-      const topWrapper = document.querySelector(".projects-top");
-      if (topWrapper) {
-        const topCard = topWrapper.querySelector(".card");
-        if (topCard) {
-          const topTags = topCard.getAttribute("data-tags")?.split(",") || [];
-          if (tag === "all" || topTags.includes(tag)) {
-            topWrapper.style.display = "flex";
-          } else {
-            topWrapper.style.display = "none";
-          }
-        }
-      }
-
       filterButtons.forEach(b => b.classList.toggle("active", b.dataset.filter === tag));
     }
     filterButtons.forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.filter)));
@@ -391,20 +860,22 @@
     document.querySelectorAll(".section").forEach(s => observer.observe(s));
     observer.observe(document.querySelector(".hero"));
 
-    // Tilt on cards (keep visual but no pointer cursor expectation)
-    document.querySelectorAll(".card").forEach(card => {
-      card.addEventListener("pointermove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
-        const rx = (y - 0.5) * 12;
-        const ry = (x - 0.5) * -12;
-        card.style.transform = perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02);
+    // Tilt effect (only on wider screens)
+    if (window.innerWidth > 900) {
+      document.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("pointermove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          const rx = (y - 0.5) * 12;
+          const ry = (x - 0.5) * -12;
+          card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+        });
+        card.addEventListener("pointerleave", () => {
+          card.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale(1)";
+        });
       });
-      card.addEventListener("pointerleave", () => {
-        card.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale(1)";
-      });
-    });
+    }
 
     // Cursor
     const cursor = document.querySelector(".cursor");
@@ -413,12 +884,12 @@
     document.addEventListener("pointermove", e => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      cursor.style.transform = translate(${mouseX}px, ${mouseY}px);
+      cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
     });
     function animateCursor(){
       posX += (mouseX - posX) * 0.15;
       posY += (mouseY - posY) * 0.15;
-      follower.style.transform = translate(${posX}px, ${posY}px);
+      follower.style.transform = `translate(${posX}px, ${posY}px)`;
       requestAnimationFrame(animateCursor);
     }
     animateCursor();
@@ -428,8 +899,8 @@
         follower.style.transform += " scale(1.1)";
       });
       el.addEventListener("pointerleave", ()=> {
-        cursor.style.transform = translate(${mouseX}px, ${mouseY}px);
-        follower.style.transform = translate(${posX}px, ${posY}px);
+        cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        follower.style.transform = `translate(${posX}px, ${posY}px)`;
       });
     });
 
@@ -462,8 +933,8 @@
         if(p.y< -50) p.y = h+50;
         if(p.y> h+50) p.y = -50;
         const grad = ctx.createRadialGradient(p.x,p.y,p.r*0.3,p.x,p.y,p.r);
-        grad.addColorStop(0, rgba(243,201,184,${p.alpha}));
-        grad.addColorStop(1, rgba(255,249,245,0));
+        grad.addColorStop(0, `rgba(243,201,184,${p.alpha})`);
+        grad.addColorStop(1, `rgba(255,249,245,0)`);
         ctx.fillStyle=grad;
         ctx.beginPath();
         ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
@@ -476,7 +947,7 @@
           p.x += p.vx;
           p.y += p.vy;
           p.alpha *= 0.94;
-          ctx.fillStyle = rgba(207,165,208,${p.alpha});
+          ctx.fillStyle = `rgba(207,165,208,${p.alpha})`;
           ctx.beginPath();
           ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
           ctx.fill();
@@ -510,7 +981,7 @@
       const yratio = (e.clientY/window.innerHeight - 0.5)*25;
       blobs.forEach((b,i)=>{
         const depth = (i+1)*6;
-        b.style.transform = translate(${xratio/depth}px, ${yratio/depth}px);
+        b.style.transform = `translate(${xratio/depth}px, ${yratio/depth}px)`;
       });
     });
 
@@ -521,7 +992,7 @@
       }, 150 + i * 80);
     });
 
-    // Modal logic (unchanged)
+    // Modal logic helper
     function makeModal(linkId, modalId) {
       const link = document.getElementById(linkId);
       const modal = document.getElementById(modalId);
